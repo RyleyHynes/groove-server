@@ -1,0 +1,32 @@
+[
+    {
+        "model": "grooveapi.artist",
+        "pk": 1,
+        "fields": {
+            "artist_name": "The Rolling Stones",
+            "genre": "Rock",
+            "artist_description": "British rock group formed in 1962.",
+            "artist_image": "https://www.nationalworld.com/jpim-static/image/2022/07/01/16/390064.jpg?width=640&quality=65&smart"
+        }
+    },
+    {
+        "model": "grooveapi.artist",
+        "pk": 2,
+        "fields": {
+            "artist_name": "Goose",
+            "genre": "Jam Band",
+            "artist_description": "Formed in Norwalk, Connecticut in 2014",
+            "artist_image": "https://www.rollingstone.com/wp-content/uploads/2022/06/Goose-Summer-2022-Press-Image-Horizontal.jpg?w=1581&h=1054&crop=1"
+        }
+    },
+    {
+        "model": "grooveapi.artist",
+        "pk": 3,
+        "fields": {
+            "artist_name": "STS9",
+            "genre": "Dance/Electronic",
+            "artist_description": "Formed in Atlanta, Georgia in 1997",
+            "artist_image": "https://s1.ticketm.net/dam/a/fee/c22def20-7669-41a3-8942-998014dd2fee_285011_TABLET_LANDSCAPE_LARGE_16_9.jpg?width=900&height=510&fit=crop&auto=webp"
+        }
+    }
+]

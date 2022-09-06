@@ -1,0 +1,24 @@
+[
+    {
+        "model": "grooveapi.grooveuser",
+        "pk": 1,
+        "fields": {
+            "user":1,
+            "address": "123 Python Place",
+            "phone_number": "518-813-2692",
+            "bio": "Me",
+            "profile_image": ""
+        }
+    },
+    {
+        "model": "grooveapi.grooveuser",
+        "pk": 2,
+        "fields": {
+            "user":2,
+            "address": "615 API Amphitheater",
+            "phone_number": "615-444-5555",
+            "bio": "Me",
+            "profile_image": ""
+        }
+    }
+]

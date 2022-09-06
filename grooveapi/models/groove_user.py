@@ -6,7 +6,10 @@ from django.contrib.auth.models import User
 
 class GrooveUser(models.Model):
     # Step 2: Add any fields on the erd
-    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name="user")
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
     address = models.CharField(max_length=100)
     phone_number = models.CharField(max_length=55)
-    image = models.URLField()
+    profile_image = models.ImageField(
+        upload_to='profileimages', height_field=None,
+        width_field=None, max_length=None, null=True)
+    bio = models.CharField(max_length=250)

@@ -8,5 +8,5 @@ class Artist(models.Model):
     artist_name = models.CharField(max_length=100)
     genre = models.CharField(max_length=50)
     artist_description = models.CharField(max_length=250)
-    image = models.URLField()
+    artist_image = models.URLField()
 

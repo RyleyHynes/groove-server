@@ -5,5 +5,5 @@ from django.db import models
 
 class LineupShow(models.Model):
     # Step 2: Add any fields on the erd
-    show = models.ForeignKey("Show", on_delete=models.CASCADE)
-    my_lineup = models.ForeignKey("MyLineup", on_delete=models.CASCADE)
+    show = models.ForeignKey("Show", on_delete=models.CASCADE, related_name="lineup_shows")
+    my_lineup = models.ForeignKey("MyLineup", on_delete=models.CASCADE, related_name="lineup_shows")

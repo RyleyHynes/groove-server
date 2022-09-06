@@ -14,8 +14,27 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, include
+from django.conf import settings
+from django.conf.urls.static import static
+
+from grooveapi.views import register_user, login_user
+from grooveapi.views import StageView
+
+from rest_framework import routers
+from grooveapi.views.artist import ArtistView
+
+from grooveapi.views.show import ShowView
+
+
+router = routers.DefaultRouter(trailing_slash=False)
+router.register(r'stages', StageView, 'stage')
+router.register(r'shows', ShowView, 'show')
+router.register(r'artists', ArtistView, 'artist')
 
 urlpatterns = [
+    path('register', register_user),
+    path('login', login_user),
     path('admin/', admin.site.urls),
+    path('', include(router.urls))
 ]

@@ -1,0 +1,23 @@
+[
+    {
+        "model": "grooveapi.stage",
+        "pk": 1,
+        "fields": {
+            "stage_name": "Python Pavilion "
+        }
+    },
+    {
+        "model": "grooveapi.stage",
+        "pk": 2,
+        "fields": {
+            "stage_name": "API Amphitheater"
+        }
+    },
+    {
+        "model": "grooveapi.stage",
+        "pk": 3,
+        "fields": {
+            "stage_name": "SQL Stage"
+        }
+    }
+]

@@ -1,0 +1,62 @@
+[
+    {
+        "model": "grooveapi.show",
+        "pk": 1,
+        "fields": {
+            "artist": 1,
+            "stage": 1,
+            "date": "2022-10-21",
+            "start_time":"23:30:00"
+        }
+    },
+    {
+        "model": "grooveapi.show",
+        "pk": 2,
+        "fields": {
+            "artist": 2,
+            "stage": 1,
+            "date": "2022-10-21",
+            "start_time": "19:30:00"  
+        }
+    },
+    {
+        "model": "grooveapi.show",
+        "pk": 3,
+        "fields": {
+            "artist": 3,
+            "stage": 2,
+            "date": "2022-10-22", 
+            "start_time": "2:30:00"    
+        }
+    },
+    {
+        "model": "grooveapi.show",
+        "pk": 4,
+        "fields": {
+            "artist": 1,
+            "stage": 1,
+            "date": "2022-10-23",
+            "start_time":"00:30:00"
+        }
+    },
+    {
+        "model": "grooveapi.show",
+        "pk": 5,
+        "fields": {
+            "artist": 2,
+            "stage": 1,
+            "date": "2022-10-23",
+            "start_time": "2:30:00"  
+        }
+    },
+    {
+        "model": "grooveapi.show",
+        "pk": 6,
+        "fields": {
+            "artist": 3,
+            "stage": 1,
+            "date": "2022-10-22", 
+            "start_time": "21:30:00"    
+        }
+    }
+]

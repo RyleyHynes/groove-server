@@ -46,15 +46,12 @@ class ShowView(ViewSet):
 
         show_artist = request.query_params.get('artist', None)
         
-        # start_date = request.query_params.get('start_date', None)
-        # end_date = request.query_params.get('end_date', None)
+        
         show_date = request.query_params.get('show_date', None)
 
         show_date_date_time = datetime(int(show_date[0:4]), int(
             show_date[5:7]), int(show_date[8:10]))
         tomorrow = show_date_date_time+timedelta(days=1)
-        print(show_date_date_time.year)
-        # shows = Show.objects.all().order_by('date').filter(date__range=[start_date, end_date] | )
         shows = Show.objects.all().order_by('date','start_time',).filter(
             Q(date=show_date)|Q(date=tomorrow,start_time__hour__in=(1,2)))
         if show_artist is not None:

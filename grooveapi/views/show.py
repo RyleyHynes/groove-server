@@ -5,7 +5,7 @@ from rest_framework.response import Response
 from rest_framework import serializers, status
 from grooveapi.models import Show, Artist, GrooveUser
 from django.db.models import Q
-from django.core.files.base import ContentFile
+
 
 
 from grooveapi.models.stage import Stage
@@ -17,7 +17,7 @@ class ShowSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Show
-        fields = ('id', 'artist', 'stage', 'date', 'start_time')
+        fields = ('id', 'artist', 'stage', 'date', 'start_time', 'end_time', 'readable_start_time', 'readable_end_time')
         depth = 2
 
 
@@ -49,13 +49,16 @@ class ShowView(ViewSet):
         
         show_date = request.query_params.get('show_date', None)
 
-        show_date_date_time = datetime(int(show_date[0:4]), int(
-            show_date[5:7]), int(show_date[8:10]))
-        tomorrow = show_date_date_time+timedelta(days=1)
-        shows = Show.objects.all().order_by('date','start_time',).filter(
-            Q(date=show_date)|Q(date=tomorrow,start_time__hour__in=(1,2)))
+       
+        shows = Show.objects.all().order_by('date','start_time',)
         if show_artist is not None:
             shows=shows.filter(artist_id=show_artist)
+        if show_date is not None:
+            show_date_date_time = datetime(int(show_date[0:4]), int(
+            show_date[5:7]), int(show_date[8:10]))
+            tomorrow = show_date_date_time+timedelta(days=1)
+            shows=shows.filter(
+            Q(date=show_date)|Q(date=tomorrow,start_time__hour__in=(0,1,2)))
         serializer=ShowSerializer(shows, many=True)
         return Response(serializer.data)
 

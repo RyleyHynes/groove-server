@@ -50,7 +50,7 @@ class ShowView(ViewSet):
         show_date = request.query_params.get('show_date', None)
 
        
-        shows = Show.objects.all().order_by('date','start_time',)
+        shows = Show.objects.all().order_by('date','start_time')
         if show_artist is not None:
             shows=shows.filter(artist_id=show_artist)
         if show_date is not None:

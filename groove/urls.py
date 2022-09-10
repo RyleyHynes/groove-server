@@ -23,6 +23,7 @@ from grooveapi.views import StageView
 
 from rest_framework import routers
 from grooveapi.views.artist import ArtistView
+from grooveapi.views.my_lineup import MyLineupView
 
 from grooveapi.views.show import ShowView
 
@@ -31,6 +32,7 @@ router = routers.DefaultRouter(trailing_slash=False)
 router.register(r'stages', StageView, 'stage')
 router.register(r'shows', ShowView, 'show')
 router.register(r'artists', ArtistView, 'artist')
+router.register(r'myshows', MyLineupView, 'myshow' )
 
 urlpatterns = [
     path('register', register_user),

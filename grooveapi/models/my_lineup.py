@@ -6,3 +6,4 @@ from django.db import models
 class MyLineup(models.Model):
     # Step 2: Add any fields on the erd
     groove_user = models.ForeignKey("GrooveUser", on_delete=models.CASCADE, related_name="lineupshows" )
+    shows= models.ManyToManyField("Show", related_name="lineups")

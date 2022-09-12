@@ -7,7 +7,6 @@ from grooveapi.models import Show, Artist, GrooveUser
 from django.db.models import Q
 
 
-
 from grooveapi.models.stage import Stage
 
 
@@ -17,7 +16,8 @@ class ShowSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Show
-        fields = ('id', 'artist', 'stage', 'date', 'start_time', 'end_time', 'readable_start_time', 'readable_end_time')
+        fields = ('id', 'artist', 'stage', 'date', 'start_time',
+                  'end_time', 'readable_start_time', 'readable_end_time', 'get_lineup_day')
         depth = 2
 
 
@@ -45,21 +45,24 @@ class ShowView(ViewSet):
         """
 
         show_artist = request.query_params.get('artist', None)
-        
-        
+
+
         show_date = request.query_params.get('show_date', None)
 
-       
-        shows = Show.objects.all().order_by('date','start_time')
+
+        shows = Show.objects.all().order_by('date', 'start_time')
         if show_artist is not None:
-            shows=shows.filter(artist_id=show_artist)
+            shows = shows.filter(artist_id=show_artist)
+
+
+
         if show_date is not None:
             show_date_date_time = datetime(int(show_date[0:4]), int(
-            show_date[5:7]), int(show_date[8:10]))
+                show_date[5:7]), int(show_date[8:10]))
             tomorrow = show_date_date_time+timedelta(days=1)
-            shows=shows.filter(
-            Q(date=show_date)|Q(date=tomorrow,start_time__hour__in=(0,1,2)))
-        serializer=ShowSerializer(shows, many=True)
+            shows = shows.filter(
+                Q(date=show_date) | Q(date=tomorrow, start_time__hour__in=(0, 1, 2)))
+        serializer = ShowSerializer(shows, many=True)
         return Response(serializer.data)
 
     def create(self, request):
@@ -69,16 +72,16 @@ class ShowView(ViewSet):
             Response --JSON serialized show instance
             """
 
-        artist=Artist.objects.get(pk=request.data["artist"])
-        stage=Stage.objects.get(pk=request.data["stage"])
-        show=Show.objects.create(
+        artist = Artist.objects.get(pk=request.data["artist"])
+        stage = Stage.objects.get(pk=request.data["stage"])
+        show = Show.objects.create(
             artist=artist,
             stage=stage,
             date=request.data["date"],
             start_time=request.data["start_time"]
         )
 
-        serializer=ShowSerializer(show)
+        serializer = ShowSerializer(show)
         return Response(serializer.data, status=status.HTTP_201_CREATED)
 
     def update(self, request, pk):
@@ -87,17 +90,17 @@ class ShowView(ViewSet):
         Returns:
             Response -- Empty body with 204 status code
             """
-        show=Show.objects.get(pk=pk)
-        show.artist=request.data["artist"]
-        show.stage=request.data["stage"]
-        show.date=request.data["date"]
-        show.start_time=request.data["start_time"]
+        show = Show.objects.get(pk=pk)
+        show.artist = request.data["artist"]
+        show.stage = request.data["stage"]
+        show.date = request.data["date"]
+        show.start_time = request.data["start_time"]
 
         show.save()
 
         return Response(None, status.HTTP_204_NO_CONTENT)
 
     def destroy(self, request, pk):
-        show=Show.objects.get(pk=pk)
+        show = Show.objects.get(pk=pk)
         show.delete()
         return Response(None, status=status.HTTP_204_NO_CONTENT)

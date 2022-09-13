@@ -16,8 +16,7 @@ class ShowSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Show
-        fields = ('id', 'artist', 'stage', 'date', 'start_time',
-                  'end_time', 'readable_start_time', 'readable_end_time', 'get_lineup_day')
+        fields = ('id', 'artist', 'stage', 'date', 'start_time','end_time', 'readable_start_time', 'readable_end_time', 'get_lineup_day')
         depth = 2
 
 
@@ -46,15 +45,11 @@ class ShowView(ViewSet):
 
         show_artist = request.query_params.get('artist', None)
 
-
         show_date = request.query_params.get('show_date', None)
-
 
         shows = Show.objects.all().order_by('date', 'start_time')
         if show_artist is not None:
             shows = shows.filter(artist_id=show_artist)
-
-
 
         if show_date is not None:
             show_date_date_time = datetime(int(show_date[0:4]), int(
@@ -94,7 +89,7 @@ class ShowView(ViewSet):
         show.artist = request.data["artist"]
         show.stage = request.data["stage"]
         show.date = request.data["date"]
-        show.start_time = request.data["start_time"]
+        show.start_time = request.data["start_time"] 
 
         show.save()
 

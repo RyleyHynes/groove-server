@@ -17,7 +17,10 @@ class Show(models.Model):
 
     @property
     def end_time(self):
-        et = datetime.combine(date.today(), datetime.datetime.strptime(self.start_time,"%H:%M")) + timedelta(hours=1)
+        try:
+            et = datetime.combine(date.today(), self.start_time) + timedelta(hours=1)
+        except Exception as e:
+            print(e)
         return et.time()
     
     @property

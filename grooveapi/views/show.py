@@ -16,7 +16,8 @@ class ShowSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Show
-        fields = ('id', 'artist', 'stage', 'date', 'start_time','end_time', 'readable_start_time', 'readable_end_time', 'get_lineup_day')
+        fields = ('id', 'artist', 'stage', 'date', 'start_time', 'end_time',
+                  'readable_start_time', 'readable_end_time', 'get_lineup_day')
         depth = 2
 
 
@@ -85,11 +86,14 @@ class ShowView(ViewSet):
         Returns:
             Response -- Empty body with 204 status code
             """
+        artist = Artist.objects.get(pk=request.data["artist"])
+        stage = Stage.objects.get(pk=request.data["stage"])
+
         show = Show.objects.get(pk=pk)
-        show.artist = request.data["artist"]
-        show.stage = request.data["stage"]
+        show.artist = artist
+        show.stage = stage
         show.date = request.data["date"]
-        show.start_time = request.data["start_time"] 
+        show.start_time = request.data["start_time"]
 
         show.save()
 

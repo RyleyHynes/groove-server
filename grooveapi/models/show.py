@@ -1,5 +1,6 @@
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, date, time
 from django.db import models
+
 
 
 # Step 1: Name the model and inherit the django Model class
@@ -14,10 +15,24 @@ class Show(models.Model):
     date = models.DateField(null=True)
     start_time = models.TimeField()
 
+    @property
     def end_time(self):
-        return self.start_time + timedelta(hours=1)
+        try:
+            et = datetime.combine(date.today(), self.start_time) + timedelta(hours=1)
+        except Exception as e:
+            print(e)
+        return et.time()
     
+    @property
     def get_lineup_day(self):
-        if self.start_time.hour in (1,2):
+        if self.start_time.hour in (0,1,2):
             return self.date-timedelta(days=1)
         return self.date
+
+    @property
+    def readable_start_time(self):
+        return self.start_time.strftime("%I:%M %p")
+
+    @property
+    def readable_end_time(self):
+        return self.end_time.strftime("%I:%M %p")

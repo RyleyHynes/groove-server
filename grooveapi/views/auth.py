@@ -18,6 +18,7 @@ def login_user(request):
     '''
     username = request.data['username']
     password = request.data['password']
+    
 
     authenticated_user = authenticate(username=username, password=password)
 
@@ -26,7 +27,9 @@ def login_user(request):
         # Returning information to client
         data = {
             'valid': True,
-            'token': token.key
+            'token': token.key,
+            'user_id': authenticated_user.id,
+            'is_staff': authenticated_user.is_staff
         }
         return Response(data)
     else:
@@ -56,8 +59,8 @@ def register_user(request):
         user=new_user
     )
     
-    token = Token.objects.create(user=groove_user.user)
+    token = Token.objects.create(user=new_user)
     
     # List of information to send to the client
-    data = { 'token': token.key }
+    data = { 'token': token.key, 'user_id': new_user.id, 'is_staff': new_user.is_staff }
     return Response(data, status=status.HTTP_201_CREATED)

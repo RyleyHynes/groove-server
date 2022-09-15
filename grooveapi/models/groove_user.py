@@ -10,6 +10,6 @@ class GrooveUser(models.Model):
     address = models.CharField(max_length=100)
     phone_number = models.CharField(max_length=55)
     profile_image = models.ImageField(
-        upload_to='profileimages', height_field=None,
+        upload_to='profile_images', height_field=None,
         width_field=None, max_length=None, null=True)
     bio = models.CharField(max_length=250)

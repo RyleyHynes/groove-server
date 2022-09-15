@@ -19,9 +19,9 @@ class Show(models.Model):
     def end_time(self):
         try:
             et = datetime.combine(date.today(), self.start_time) + timedelta(hours=1)
+            return et.time()
         except Exception as e:
             print(e)
-        return et.time()
     
     @property
     def get_lineup_day(self):

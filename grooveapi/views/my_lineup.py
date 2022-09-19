@@ -4,6 +4,7 @@ from rest_framework.viewsets import ViewSet
 from rest_framework.response import Response
 from rest_framework import serializers, status
 from grooveapi.models import GrooveUser
+from grooveapi.models import my_lineup
 from grooveapi.models.my_lineup import MyLineup
 from grooveapi.views.show import ShowSerializer
 from django.db.models import Q
@@ -51,4 +52,11 @@ class MyLineupView(ViewSet):
         )
         my_lineup.shows.add(request.data["show_id"])
         return Response({'message': 'show added'}, status=status.HTTP_201_CREATED)
+
+    
+    def destroy(self, request, pk):
+        groove_user=GrooveUser.objects.get(user=request.auth.user)
+        my_lineup_show= MyLineup.objects.get(groove_user=groove_user)
+        my_lineup_show.shows.remove(pk)
+        return Response(None, status=status.HTTP_204_NO_CONTENT)
 

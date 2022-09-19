@@ -50,7 +50,8 @@ def register_user(request):
         username=request.data['username'],
         password=request.data['password'],
         first_name=request.data['first_name'],
-        last_name=request.data['last_name']
+        last_name=request.data['last_name'],
+        email=request.data['email']
     )
 
     # using a model with a 1 to 1 relationship to the django user so I to created an object
@@ -59,8 +60,8 @@ def register_user(request):
         user=new_user
     )
     
-    token = Token.objects.create(user=new_user)
+    token = Token.objects.create(user=groove_user.user)
     
     # List of information to send to the client
-    data = { 'token': token.key, 'user_id': new_user.id, 'is_staff': new_user.is_staff }
+    data = { 'token': token.key, 'user_id': new_user.id, 'is_staff': new_user.is_staff, "valid": True }
     return Response(data, status=status.HTTP_201_CREATED)

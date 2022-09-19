@@ -86,7 +86,7 @@ class ShowView(ViewSet):
         Returns:
             Response -- Empty body with 204 status code
             """
-        artist = Artist.objects.get(pk=request.data["artist"])
+        artist = Artist.objects.get(pk=request.data["artist"]["id"]) #because its coming back as an object
         stage = Stage.objects.get(pk=request.data["stage"])
 
         show = Show.objects.get(pk=pk)

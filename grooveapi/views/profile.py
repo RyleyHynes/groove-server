@@ -63,14 +63,15 @@ class ProfileView(ViewSet):
         Returns:
             Response -- Empty body with 204 status code
             """
-        format, imgstr = request.data["data"].split(';base64')
-        ext = format.split('/')[-1]
-        data = ContentFile(base64.b64decode(
-            imgstr), name=f'{uuid.uuid4()}.{ext}')
         user = request.auth.user
         groove_user= GrooveUser.objects.get(user=request.auth.user)
-        groove_user.profile_image=data
-        groove_user.save()
+        if request.data.get("data"):
+            format, imgstr = request.data["data"].split(';base64')
+            ext = format.split('/')[-1]
+            data = ContentFile(base64.b64decode(
+                imgstr), name=f'{uuid.uuid4()}.{ext}')
+            groove_user.profile_image=data
+            groove_user.save()
         user.username=request.data["username"]
         user.email=request.data["email"]
         user.first_name=request.data["first_name"]

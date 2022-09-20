@@ -4,3 +4,5 @@ from .lineup_show import LineupShow
 from .my_lineup import MyLineup
 from .show import Show
 from .stage import Stage
+from .deactivate import Deactivate
+from .demote import Demote

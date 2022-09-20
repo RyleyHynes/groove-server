@@ -23,6 +23,8 @@ from grooveapi.views import StageView
 
 from rest_framework import routers
 from grooveapi.views.artist import ArtistView
+from grooveapi.views.deactivate import DeactivateView
+from grooveapi.views.demote import DemoteView
 from grooveapi.views.my_lineup import MyLineupView
 from grooveapi.views.profile import ProfileView
 
@@ -35,6 +37,8 @@ router.register(r'shows', ShowView, 'show')
 router.register(r'artists', ArtistView, 'artist')
 router.register(r'myshows', MyLineupView, 'myshow')
 router.register(r'profiles', ProfileView, 'profile')
+router.register(r'demotes', DemoteView, 'demote')
+router.register(r'deactives', DeactivateView, 'deactive')
 
 
 urlpatterns = [

@@ -28,15 +28,18 @@ class MyLineupView(ViewSet):
         """Handle GET requests to get all """
         
 
-        show_date = request.query_params.get('show_date', None)
-        # show_artist = request.query_params.get('artist', None)
+        # show_date = request.query_params.get('show_date', None)
         groove_user=GrooveUser.objects.get(user=request.auth.user)
+        search = self.request.query_params.get('search', None)
 
         shows = MyLineup.objects.all()
 
-        # shows = MyLineup.objects.all()  #.order_by('date', 'start_time')
-        # if show_artist is not None:
-        #     shows = shows.filter(artist_id=show_artist)
+        if search is not None:
+            shows = shows.filter(
+                Q(artist__contains=search) |
+                Q(stage__contains=search) |
+                Q(start_time__contains=search)
+            )
         
                 
         serializer=MyLineupSerializer(shows, many=True)

@@ -47,7 +47,7 @@ class ShowView(ViewSet):
         show_artist = request.query_params.get('artist', None)
 
         show_date = request.query_params.get('show_date', None)
-
+        search = self.request.query_params.get('search', None)
         shows = Show.objects.all().order_by('date', 'start_time')
         if show_artist is not None:
             shows = shows.filter(artist_id=show_artist)
@@ -58,6 +58,13 @@ class ShowView(ViewSet):
             tomorrow = show_date_date_time+timedelta(days=1)
             shows = shows.filter(
                 Q(date=show_date) | Q(date=tomorrow, start_time__hour__in=(0, 1, 2)))
+
+        if search is not None:
+            shows = shows.filter(
+                Q(artist__contains=search) |
+                Q(stage__contains=search) |
+                Q(start_time__contains=search)
+            )
         serializer = ShowSerializer(shows, many=True)
         return Response(serializer.data)
 

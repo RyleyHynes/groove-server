@@ -3,6 +3,7 @@ from rest_framework.viewsets import ViewSet
 from rest_framework.response import Response
 from rest_framework import serializers, status
 from grooveapi.models.artist import Artist
+from django.db.models import Q
 
 
 class ArtistSerializer(serializers.ModelSerializer):
@@ -31,11 +32,18 @@ class ArtistView(ViewSet):
         
         Returns:
             Response -- JSON serialized list of artists"""
-
-        artists = Artist.objects.all()
         artist_show = request.query_params.get('show', None)
+        search = self.request.query_params.get('search', None)
+        artists = Artist.objects.all()
         if artist_show is not None:
             artists = artists.filter(show_id=artist_show)
+
+        if search is not None:
+            artists = artists.filter(
+                Q(artist_name__contains=search) |
+                Q(genre__contains=search) |
+                Q(artist_description__contains=search)
+            )
         serializer = ArtistSerializer(artists, many = True)
         return Response(serializer.data)
 

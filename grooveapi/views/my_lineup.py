@@ -32,17 +32,19 @@ class MyLineupView(ViewSet):
         groove_user=GrooveUser.objects.get(user=request.auth.user)
         search = self.request.query_params.get('search', None)
 
-        shows = MyLineup.objects.all()
+        lineup = MyLineup.objects.filter(groove_user=groove_user)
 
+        serializer=MyLineupSerializer(lineup, many=True)
         if search is not None:
-            shows = shows.filter(
-                Q(artist__contains=search) |
-                Q(stage__contains=search) |
-                Q(start_time__contains=search)
+            shows = lineup[0].shows.filter(
+                Q(artist__artist_name__icontains=search) |
+                Q(stage__stage_name__icontains=search) |
+                Q(start_time__icontains=search)
             )
+            show_serializer=ShowSerializer(shows, many=True)
+            serializer.data[0]['shows']=show_serializer.data
         
                 
-        serializer=MyLineupSerializer(shows, many=True)
         return Response(serializer.data)
 
     def create(self, request):

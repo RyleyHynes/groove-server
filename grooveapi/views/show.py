@@ -59,13 +59,16 @@ class ShowView(ViewSet):
             shows = shows.filter(
                 Q(date=show_date) | Q(date=tomorrow, start_time__hour__in=(0, 1, 2)))
 
+        serializer = ShowSerializer(shows, many=True)
         if search is not None:
-            shows = shows.filter(
-                Q(artist__contains=search) |
-                Q(stage__contains=search) |
+            schedule = shows.filter(
+                Q(artist__artist_name__contains=search) |
+                Q(stage__stage_name__contains=search) |
                 Q(start_time__contains=search)
             )
-        serializer = ShowSerializer(shows, many=True)
+            schedule_serializer=ShowSerializer(schedule, many=True)
+            serializer.data[0]['shows']=schedule_serializer.data
+        
         return Response(serializer.data)
 
     def create(self, request):

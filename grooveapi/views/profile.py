@@ -65,8 +65,8 @@ class ProfileView(ViewSet):
             """
         user = request.auth.user
         groove_user= GrooveUser.objects.get(user=request.auth.user)
-        if request.data.get("data"):
-            format, imgstr = request.data["data"].split(';base64')
+        if request.data.get("profile_image"):
+            format, imgstr = request.data["profile_image"].split(';base64')
             ext = format.split('/')[-1]
             data = ContentFile(base64.b64decode(
                 imgstr), name=f'{uuid.uuid4()}.{ext}')

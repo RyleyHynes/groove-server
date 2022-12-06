@@ -1,3 +1,4 @@
+# __init__.py files make python dictionaries into python packages
 from .auth import login_user
 from .auth import register_user
 from .stage import StageView

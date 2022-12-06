@@ -39,7 +39,7 @@ def login_user(request):
 @api_view(['POST'])
 @permission_classes([AllowAny])
 def register_user(request):
-    '''Handles the creation of a new goove user for authentication
+    '''Handles the creation of a new groove user for authentication
 
     Method arguments:
       request -- The full HTTP request object
@@ -54,7 +54,7 @@ def register_user(request):
         email=request.data['email']
     )
 
-    # using a model with a 1 to 1 relationship to the django user so I to created an object
+    # using a model with a 1 to 1 relationship to the django user to created an object
     groove_user = GrooveUser.objects.create(
         bio=request.data['bio'],
         user=new_user
